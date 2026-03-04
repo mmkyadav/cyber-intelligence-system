@@ -1,53 +1,65 @@
-import sqlite3
+import re
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
-VECTOR_DB_PATH = "storage/vector_store"
-DB_PATH = "database/cyber_sector.db"
+VECTORSTORE_DIR = "vectorstore"
 
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
 vectorstore = Chroma(
-    persist_directory=VECTOR_DB_PATH,
-    embedding_function=embeddings
+    persist_directory="vectorstore",
+    embedding_function=embeddings,
+    collection_name="cyber_docs"
 )
 
-retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+retriever = vectorstore.as_retriever(search_kwargs={"k":3})
 
 
-def get_total_jobs():
+def extract_employment_number(text):
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+    # prioritize workforce number
+    patterns = [
+        r"(\d{1,3},\d{3})",     # 7,351
+        r"\b(\d{4})\b"          # fallback for 7351
+    ]
 
-    cursor.execute("""
-        SELECT value FROM metrics
-        WHERE metric_name='employment'
-        AND region='Ireland'
-        LIMIT 1
-    """)
+    for pattern in patterns:
 
-    result = cursor.fetchone()
-    conn.close()
+        matches = re.findall(pattern, text)
 
-    if result:
-        return int(result[0])
+        if matches:
+            for m in matches:
+
+                num = int(m.replace(",", ""))
+
+                # ignore numbers that are clearly not workforce values
+                if num < 1000:
+                    continue
+
+                if num > 50000:
+                    continue
+
+                return num
 
     return None
 
 
-def retrieve_answer(query):
-
-    jobs = get_total_jobs()
+def retrieve_answer(query: str):
 
     docs = retriever.invoke(query)
 
-    best_doc = docs[0]
+    if not docs:
+        return {"error": "No relevant document found"}
+
+    text = docs[0].page_content
+    metadata = docs[0].metadata
+
+    jobs = extract_employment_number(text)
 
     return {
         "jobs_reported": jobs,
-        "page": best_doc.metadata.get("page"),
-        "citation": best_doc.page_content
+        "page": metadata.get("page"),
+        "citation": text
     }

@@ -1,12 +1,12 @@
 import json
 import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
 
 
 TEXT_DATA_PATH = "storage/text_data.json"
-VECTOR_STORE_DIR = "storage/vector_store"
+VECTOR_STORE_DIR = "vectorstore"
 
 
 def load_text_data(path):
@@ -15,6 +15,7 @@ def load_text_data(path):
 
 
 def build_vector_store():
+
     print("Loading extracted text...")
     data = load_text_data(TEXT_DATA_PATH)
 
@@ -22,39 +23,42 @@ def build_vector_store():
     metadatas = []
 
     print("Splitting into chunks...")
+
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=150
     )
 
     for page in data:
+
         splits = text_splitter.split_text(page["content"])
 
         for chunk in splits:
+
             documents.append(chunk)
+
             metadatas.append({
                 "page": page["page"],
                 "source": page["source"]
             })
 
     print("Loading embedding model...")
+
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
     print("Building Chroma vector store...")
 
-    # Ensure directory exists
     os.makedirs(VECTOR_STORE_DIR, exist_ok=True)
 
     vectorstore = Chroma.from_texts(
         texts=documents,
         embedding=embeddings,
         metadatas=metadatas,
-        persist_directory=VECTOR_STORE_DIR
+        persist_directory=VECTOR_STORE_DIR,
+        collection_name="cyber_docs"
     )
-
-    vectorstore.persist()
 
     print("Vector store built successfully.")
 
