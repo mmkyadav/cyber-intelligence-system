@@ -1,681 +1,600 @@
-# Cyber Intelligence Agentic System
+# Cyber Intelligence System
 
-**Technical Assessment Implementation**
+## Agentic Backend for Dynamic Knowledge Extraction from the Cyber Ireland 2022 Report
 
-An **agentic data intelligence backend** built to analyze the **Cyber Ireland 2022 report** using a hybrid architecture that combines:
+---
 
-* Document retrieval (RAG)
+# 1. Project Overview
 
-* Structured data analytics
+This project implements an **agentic AI backend** capable of transforming a static industry report into a **dynamic, queryable intelligence system**.
 
-* Deterministic mathematical tools
+The system processes the **Cyber Ireland 2022 Report**, extracts structured and unstructured information, and enables users to query the data through a unified API endpoint.
 
-* Autonomous tool routing
+Unlike traditional Retrieval Augmented Generation (RAG) systems, this architecture supports:
 
-* REST API access
+- Evidence-backed document retrieval
+- Structured analytics over tabular data
+- Mathematical reasoning
+- Tool‑based agent orchestration
 
-The system extracts insights from a complex report by orchestrating multiple specialized tools instead of relying on a single model.
+The goal is to build a **reliable intelligence system** capable of answering complex queries with **verifiable citations and accurate calculations**.
 
-# Table of Contents
+---
 
-1. Project Overview
+# 2. Assignment Objectives
 
-2. Problem Statement
+The assignment required building a system capable of:
 
-3. System Architecture
+1. **Ingesting a complex PDF report** containing text and tables.
+2. **Transforming the document into structured and searchable data.**
+3. **Designing an agentic backend capable of tool usage.**
+4. **Answering three categories of questions:**
 
-4. Approach and Design Decisions
-
-5. Technologies Used
-
-6. Alternatives Considered
-
-7. ETL Pipeline
-
-8. Retrieval System (RAG)
-
-9. Structured Analytics Layer
-
-10. Mathematical Reasoning Tool
-
-11. Agent Routing Logic
-
-12. API Interface
-
-13. Installation
-
-14. Running the Pipeline
-
-15. Usage Examples
-
-16. Project Structure
-
-17. Limitations
-
-18. Future Improvements
-
-19. License
-
-# Project Overview
-
-This project implements an **agentic intelligence system** capable of answering analytical questions from the *Cyber Ireland Cybersecurity Sector Report 2022*.
-
-The system processes the report through an ETL pipeline and exposes a **query interface capable of handling different types of analytical questions**, including:
-
-* factual document questions
-
-* regional comparisons
-
-* forecasting calculations
-
-Instead of relying solely on a language model, the system integrates:
-
-* semantic document retrieval
-
-* structured SQL queries
-
-* deterministic mathematical tools
-
-This hybrid approach improves **accuracy, transparency, and reliability**.
-
-# Problem Statement
-
-The Cyber Ireland report contains:
-
-* unstructured narrative text
-
-* structured tables
-
-* numerical projections
-
-* regional comparisons
-
-Traditional document QA systems struggle with this because they require:
-
-1. document search
-
-2. structured analytics
-
-3. numerical reasoning
-
-The goal of this assignment was to design a system that can:
-
-* extract knowledge from the report
-
-* answer analytical queries
-
-* reference supporting evidence
-
-* compute derived metrics
-
-# System Architecture
-
-
-Cyber Ireland Report (PDF)
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;       ETL Pipeline
-
-&nbsp;┌────────────────────────────┐
-
-&nbsp;│ Text Extraction             │
-
-&nbsp;│ Table Extraction            │
-
-&nbsp;│ Metrics Warehouse Creation  │
-
-&nbsp;└────────────────────────────┘
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;    Vector Embedding Layer
-
-&nbsp;    (Sentence Transformers)
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;       Vector Database
-
-&nbsp;          Chroma
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;       Agent Router
-
-&nbsp;┌────────────┼────────────┐
-
-&nbsp;│            │            │
-
-&nbsp;▼            ▼            ▼
-
-Retriever   SQL Tool    Math Tool
-
-(RAG)      (Analytics)  (CAGR)
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;        FastAPI
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;       Client Queries
-
-# Approach and Design Decisions
-
-A **hybrid intelligence architecture** was implemented.
-
-Instead of relying exclusively on LLM reasoning, the system separates responsibilities:
-
-| Capability | Implementation |
-
-| --------------------- | ---------------- |
-
-| Document search | Vector retrieval |
-
-| Regional analytics | SQL warehouse |
-
-| Forecast calculations | Math tool |
-
-This design improves:
-
-* correctness
-
-* reproducibility
-
-* explainability
-
-Each tool is deterministic and transparent.
-
-# Technologies Used
-
-| Technology | Purpose |
-
-| --------------------- | ------------------------- |
-
-| Python | Core programming language |
-
-| FastAPI | REST API framework |
-
-| LangChain | Retrieval abstraction |
-
-| Sentence Transformers | Embedding generation |
-
-| Chroma | Vector database |
-
-| SQLite | Metrics warehouse |
-
-| Camelot | PDF table extraction |
-
-| pdfminer / pypdf | PDF text extraction |
-
-| Pandas | Data processing |
-
-| Uvicorn | ASGI server |
-
-# Why These Technologies Were Chosen
-
-## Python
-
-Python was chosen due to its strong ecosystem for:
-
-* machine learning
-
-* document processing
-
-* data engineering
-
-* AI frameworks
-
-## FastAPI
-
-FastAPI provides:
-
-* high performance
-
-* automatic OpenAPI documentation
-
-* simple async API development
-
-Alternative considered:
-
-**Flask**
-
-Why not Flask:
-
-* slower
-
-* lacks automatic schema documentation
-
-* less suited for production APIs
-
-## Sentence Transformers
-
-Embedding model used:
-
-
-sentence-transformers/all-MiniLM-L6-v2
-
-Reasons:
-
-* lightweight
-
-* fast inference
-
-* strong semantic performance
-
-* works well on CPU
-
-Alternative considered:
-
-OpenAI embeddings
-
-Rejected because:
-
-* paid API dependency
-
-* network latency
-
-* quota limitations
-
-Local embeddings provide better **reproducibility and cost control**.
-
-## Chroma Vector Database
-
-Chroma was selected because:
-
-* easy local setup
-
-* tight LangChain integration
-
-* persistent storage
-
-* lightweight
-
-Alternative considered:
-
-FAISS
-
-Reasons FAISS was not used:
-
-* FAISS does not natively provide persistence
-
-* requires additional management
-
-* more suited for large-scale production systems
-
-For this assignment, Chroma provides **simpler persistence and usability**.
-
-## SQLite
-
-SQLite was used for the analytics warehouse because:
-
-* lightweight
-
-* serverless
-
-* zero configuration
-
-* ideal for analytical prototypes
-
-Alternative considered:
-
-PostgreSQL
-
-PostgreSQL would be preferred in production but adds operational complexity for a local assignment.
-
-## Camelot
-
-Camelot provides reliable table extraction from PDFs.
-
-Alternative considered:
-
-Tabula
-
-Camelot was chosen because:
-
-* better Python integration
-
-* more control over extraction
-
-* better table detection
-
-# ETL Pipeline
-
-The ETL pipeline prepares the report for analysis.
-
-Steps:
-
-1. Extract document text
-
-2. Extract tabular data
-
-3. Store metrics in database
-
-4. Create vector embeddings
-
-## Text Extraction
-
-Extracts narrative sections from the report for semantic retrieval.
-
-Tools used:
-
-
-pypdf
-
-pdfminer
-
-Output:
-
-* cleaned text corpus
-
-* page metadata
-
-## Table Extraction
-
-Tables are extracted using Camelot and stored with metadata:
-
-| Field | Description |
-
-| ------------ | ----------------- |
-
-| table_name | identifier |
-
-| page_number | source page |
-
-| row_count | rows extracted |
-
-| column_count | columns extracted |
-
-## Metrics Warehouse
-
-Important metrics were normalized and stored in SQLite.
-
-Example metrics:
-
-| Metric | Value |
-
-| ------------------------ | ----- |
-
-| Total firms | 489 |
-
-| Dedicated firms | 160 |
-
-| Diversified firms | 329 |
-
-| Cybersecurity employment | 7351 |
-
-# Retrieval Augmented Generation (RAG)
-
-Document text is split into chunks and embedded using Sentence Transformers.
-
-These embeddings are stored in a **Chroma vector store**.
-
-When a query arrives:
-
-1. embeddings are computed
-
-2. nearest document chunks are retrieved
-
-3. relevant citation and page are returned
-
-Example output:
-
-
-jobs\_reported: 7351
-
-page: 23
-
-citation: workforce section of the report
-
-# Structured Analytics Layer
-
-Certain queries require structured calculations rather than document retrieval.
+### Verification Queries
+Retrieve exact facts with page citations.
 
 Example:
 
+> "What is the total number of jobs reported, and where exactly is this stated?"
 
-Compare the concentration of Pure-Play cybersecurity firms in the South-West against the National Average
+---
 
-These are answered through SQL queries against the metrics warehouse.
+### Data Synthesis Queries
+Extract structured data and compute comparisons.
 
-Benefits:
+Example:
 
-* deterministic
+> "Compare the concentration of Pure‑Play cybersecurity firms in the South‑West against the National Average."
 
-* explainable
+---
 
-* auditable
+### Forecasting Queries
+Combine retrieved values with mathematical calculations.
 
-# Mathematical Tool
+Example:
 
-Growth projections require mathematical reasoning.
+> "What CAGR is required to reach 17000 cybersecurity jobs by 2030?"
 
-Example query:
+---
 
+# 3. High Level System Architecture
 
-What CAGR is needed to reach 17000 jobs by 2030?
+```
+Cyber Ireland Report (PDF)
+            │
+            ▼
+        ETL Pipeline
+            │
+   ┌────────┴─────────┐
+   ▼                  ▼
+Structured Tables   Text Content
+(SQL Database)      (Vector Store)
+   │                  │
+   ▼                  ▼
+Analytics Tool     Retrieval Tool
+        │
+        ▼
+      Agent Router
+(Intent Classification + Tool Selection)
+        │
+        ▼
+      FastAPI API
+        │
+        ▼
+      /query endpoint
+```
+
+---
+
+# 4. Architecture Rationale
+
+Traditional RAG pipelines only retrieve text.
+
+However the assignment requires:
+
+- Structured table analysis
+- Mathematical calculations
+- Multi‑step reasoning
+
+Therefore the system separates tasks into **specialized tools**.
+
+| Tool | Responsibility |
+|-----|-----|
+| Retrieval Tool | Extract factual evidence from document |
+| Analytics Tool | Query structured metrics from SQL |
+| Math Tool | Perform reliable calculations |
+
+An **agent router** decides which tool should handle the query.
+
+This approach increases reliability and prevents hallucinated results.
+
+---
+
+# 5. Technology Stack
+
+## Backend Framework
+
+**FastAPI**
+
+Why used:
+
+- High performance
+- Automatic API documentation
+- Ideal for microservice architectures
+
+Alternatives considered:
+
+| Alternative | Reason Rejected |
+|----|----|
+Flask | Lacks built‑in API documentation |
+Django | Overly heavy for this project |
+
+---
+
+## Vector Database
+
+**ChromaDB**
+
+Why used:
+
+- Lightweight
+- Local storage
+- Fast semantic search
+
+Alternatives considered:
+
+| Alternative | Reason Not Used |
+|----|----|
+Pinecone | Requires external service |
+Weaviate | Overkill for assignment |
+FAISS | No native metadata persistence |
+
+---
+
+## Embedding Model
+
+**sentence-transformers/all-MiniLM-L6-v2**
+
+Why used:
+
+- Fast inference
+- High semantic similarity performance
+- Lightweight model
+
+Alternatives considered:
+
+| Alternative | Reason Not Used |
+|----|----|
+OpenAI embeddings | Requires API key |
+BERT large models | Too computationally heavy |
+
+---
+
+## Database
+
+**SQLite**
+
+Why used:
+
+- Simple local database
+- Zero configuration
+- Ideal for structured metrics
+
+Alternatives considered:
+
+| Alternative | Reason Not Used |
+|----|----|
+PostgreSQL | Unnecessary complexity |
+MongoDB | Less suitable for relational metrics |
+
+---
+
+## NLP Intent Classification
+
+**Sentence Transformers + Cosine Similarity**
+
+Used to classify queries into:
+
+- retrieval
+- analytics
+- math
+
+Alternatives considered:
+
+| Alternative | Reason Not Used |
+|----|----|
+Rule based routing | Too brittle |
+LLM based routing | Requires external APIs |
+
+---
+
+# 6. ETL Pipeline
+
+The ETL pipeline converts the report into two usable knowledge layers.
+
+---
+
+## Step 1 — Text Extraction
+
+Script:
+
+```
+etl/extract_text.py
+```
+
+Responsibilities:
+
+- Extract text from PDF
+- Preserve page numbers
+- Store data in JSON format
+
+Output:
+
+```
+storage/text_data.json
+```
+
+---
+
+## Step 2 — Table Extraction
+
+Script:
+
+```
+etl/extract_tables.py
+```
+
+Responsibilities:
+
+- Identify tabular content
+- Extract firm counts by region
+- Convert tables into structured data
+
+---
+
+## Step 3 — Metrics Database
+
+Script:
+
+```
+etl/build_metrics_layer.py
+```
+
+Responsibilities:
+
+- Load extracted tables
+- Create SQLite schema
+- Store structured metrics
+
+Database:
+
+```
+database/cyber_sector.db
+```
+
+Example metrics stored:
+
+| Metric | Value |
+|------|------|
+Total firms | 489 |
+Cork firms | 129 |
+Kerry firms | 5 |
+South West firms | 134 |
+Employment | 7351 |
+
+---
+
+## Step 4 — Vector Embeddings
+
+Script:
+
+```
+etl/build_vector_store.py
+```
+
+Responsibilities:
+
+- Chunk document text
+- Generate embeddings
+- Store vectors in ChromaDB
+
+Output directory:
+
+```
+vectorstore/
+```
+
+---
+
+# 7. Agent System
+
+The agent acts as the **decision layer** of the system.
+
+Responsibilities:
+
+1. Understand query intent
+2. Select appropriate tool
+3. Execute tool
+4. Return structured response
+
+---
+
+## Intent Classification
+
+Script:
+
+```
+agent/intent_classifier.py
+```
+
+Uses sentence embeddings to compare queries against predefined intent examples.
+
+This provides semantic routing instead of brittle keyword matching.
+
+---
+
+## Agent Router
+
+Script:
+
+```
+agent/agent_router.py
+```
+
+Responsibilities:
+
+- Receive query
+- Identify intent
+- Call correct tool
+- Return response
+
+---
+
+## Execution Logger
+
+Script:
+
+```
+agent/execution_logger.py
+```
+
+Logs tool usage and reasoning traces.
+
+This provides visibility into how the agent reached the answer.
+
+---
+
+# 8. Tools
+
+## Retrieval Tool
+
+Script:
+
+```
+rag/retriever.py
+```
+
+Responsibilities:
+
+- Perform semantic search
+- Retrieve most relevant document chunk
+- Extract numerical values
+- Return page citation
+
+Used for **verification queries**.
+
+---
+
+## Structured Query Tool
+
+Script:
+
+```
+rag/structured_query.py
+```
+
+Responsibilities:
+
+- Query SQLite database
+- Compute regional comparisons
+- Calculate firm distribution
+
+Used for **data synthesis queries**.
+
+---
+
+## Math Tool
+
+Script:
+
+```
+rag/math_tools.py
+```
+
+Responsibilities:
+
+- Perform numerical calculations
+- Compute CAGR
 
 Formula used:
 
+```
+CAGR = (End / Start)^(1 / Years) - 1
+```
 
-CAGR = (Final / Initial)^(1 / Years) - 1
+Used for **forecasting queries**.
 
-Output:
+---
 
+# 9. API Layer
 
-9.76% CAGR required
+Script:
 
-Using deterministic code avoids potential numerical errors from LLM reasoning.
+```
+api/main.py
+```
 
-# Agent Routing Logic
+Responsibilities:
 
-The system uses a routing layer to determine which tool should answer a query.
+- Start FastAPI server
+- Provide `/query` endpoint
+- Forward queries to agent router
 
-Routing rules:
+Example request:
 
-| Query Pattern | Tool |
+```
+POST /query
+{
+  "query": "How many cybersecurity professionals work in Ireland?"
+}
+```
 
-| ----------------------- | --------- |
+Example response:
 
-| jobs / workforce | Retriever |
+```
+{
+  "query": "...",
+  "tool_used": "retrieval",
+  "result": {
+    "jobs_reported": 7351,
+    "page": 17,
+    "citation": "..."
+  }
+}
+```
 
-| compare / concentration | SQL tool |
+---
 
-| CAGR / growth | Math tool |
+# 10. Repository Structure
 
-Example:
-
-
-Query: What CAGR is needed to reach 17000 jobs by 2030?
-
-Tool Used: math\_tool
-
-# API Interface
-
-The system exposes a REST API built with FastAPI.
-
-Start the API server:
-
-
-uvicorn api.main:app --reload
-
-Open interactive documentation:
-
-
-http://127.0.0.1:8000/docs
-
-# Installation
-
-Clone the repository:
-
-
-git clone https://github.com/mmkyadav/cyber-intelligence-system.git
-
-Navigate to project:
-
-
-cd cyber-intelligence-system
-
-Create virtual environment:
-
-
-python -m venv venv
-
-Activate environment:
-
-
-venv\\Scripts\\activate
-
-Install dependencies:
-
-
-pip install -r requirements.txt
-
-# Running the Pipeline
-
-Run ETL steps in order.
-
-### Extract text
-
-
-python etl/extract\_text.py
-
-### Build vector store
-
-
-python etl/build\_vector\_store.py
-
-### Extract tables
-
-
-python etl/extract\_tables.py
-
-### Build metrics warehouse
-
-
-python etl/build\_metrics\_layer.py
-
-# Run the API
-
-
-uvicorn api.main:app --reload
-
-# Example Queries
-
-### Employment
-
-
-What is the total number of jobs reported?
-
-Output
-
-
-7351 jobs
-
-### Regional comparison
-
-
-Compare the concentration of Pure-Play cybersecurity firms in the South-West against the National Average
-
-### Growth projection
-
-
-What CAGR is needed to reach 17000 jobs by 2030?
-
-# Project Structure
-
-
+```
 cyber-intelligence-system
 
-│
+agent/
+ ├ intent_classifier.py
+ ├ agent_router.py
+ ├ execution_logger.py
 
-├── agent
+api/
+ └ main.py
 
-│   └── agent\_router.py
+etl/
+ ├ extract_text.py
+ ├ extract_tables.py
+ ├ build_metrics_layer.py
+ └ build_vector_store.py
 
-│
+rag/
+ ├ retriever.py
+ ├ structured_query.py
+ └ math_tools.py
 
-├── api
+storage/
+ └ text_data.json
 
-│   └── main.py
+database/
+ └ cyber_sector.db
 
-│
+vectorstore/
 
-├── etl
+requirements.txt
+README.md
+```
 
-│   ├── extract\_text.py
+---
 
-│   ├── extract\_tables.py
+# 11. Setup Instructions
 
-│   └── build\_vector\_store.py
+## Install dependencies
 
-│
+```
+pip install -r requirements.txt
+```
 
-├── rag
+---
 
-│   ├── retriever.py
+## Run ETL Pipeline
 
-│   ├── structured\_query.py
+```
+python etl/extract_text.py
+python etl/extract_tables.py
+python etl/build_metrics_layer.py
+python etl/build_vector_store.py
+```
 
-│   └── math\_tools.py
+---
 
-│
+## Start Backend
 
-├── database
+```
+uvicorn api.main:app --reload
+```
 
-│   ├── schema.sql
+---
 
-│   └── inspect\_tables.py
+## Open API
 
-│
+```
+http://127.0.0.1:8000/docs
+```
 
-├── storage
+---
 
-│
+# 12. Evaluation Results
 
-├── requirements.txt
+## Verification Query
 
-├── README.md
+"What is the total number of jobs reported?"
 
-└── .gitignore
+Result:
 
-# Limitations
+7351 cybersecurity professionals with page citation.
 
-* Only a single report is indexed
+---
 
-* Some regional breakdowns were unavailable in the source document
+## Data Synthesis Query
 
-* Query routing is rule-based rather than model-driven
+"What proportion of cybersecurity firms are located in Cork?"
 
-# Future Improvements
+Result:
 
-Possible extensions:
+129 / 489 = 26.38%
 
-* LLM-based query planner
+---
 
-* multi-document indexing
+## Forecasting Query
 
-* automated SQL generation
+"What CAGR is required to reach 17000 jobs by 2030?"
 
-* dashboard visualization
+Result:
 
-* deployment with Docker
+9.76%
 
-# License
+---
 
-This repository is provided solely for **technical evaluation purposes** as part of a coding assessment.
+# 13. Limitations
 
-Commercial use or redistribution without permission is not permitted.
+1. Intent classifier is lightweight.
+2. Some queries may retrieve approximate context.
+3. Table extraction required manual validation.
+
+---
+
+# 14. Future Improvements
+
+For production deployment the system could be improved with:
+
+- LLM based tool planning
+- automatic SQL generation
+- streaming document ingestion
+- distributed vector databases
+- observability tools like LangSmith
+
+---
+
+# 15. Conclusion
+
+This project demonstrates how an **agentic architecture can transform static documents into dynamic knowledge systems**.
+
+By combining retrieval, structured analytics, and mathematical reasoning, the system provides reliable and explainable intelligence extraction from complex reports.
+
