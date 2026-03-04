@@ -1,176 +1,115 @@
-\# Cyber Intelligence Agentic System
+# Cyber Intelligence Agentic System
 
+**Technical Assessment Implementation**
 
+An **agentic data intelligence backend** built to analyze the **Cyber Ireland 2022 report** using a hybrid architecture that combines:
 
-\*\*Technical Assessment Implementation\*\*
+* Document retrieval (RAG)
 
+* Structured data analytics
 
+* Deterministic mathematical tools
 
-An \*\*agentic data intelligence backend\*\* built to analyze the \*\*Cyber Ireland 2022 report\*\* using a hybrid architecture that combines:
+* Autonomous tool routing
 
-
-
-\* Document retrieval (RAG)
-
-\* Structured data analytics
-
-\* Deterministic mathematical tools
-
-\* Autonomous tool routing
-
-\* REST API access
-
-
+* REST API access
 
 The system extracts insights from a complex report by orchestrating multiple specialized tools instead of relying on a single model.
 
+# Table of Contents
 
+1. Project Overview
 
----
+2. Problem Statement
 
+3. System Architecture
 
+4. Approach and Design Decisions
 
-\# Table of Contents
+5. Technologies Used
 
+6. Alternatives Considered
 
+7. ETL Pipeline
 
-1\. Project Overview
+8. Retrieval System (RAG)
 
-2\. Problem Statement
+9. Structured Analytics Layer
 
-3\. System Architecture
+10. Mathematical Reasoning Tool
 
-4\. Approach and Design Decisions
+11. Agent Routing Logic
 
-5\. Technologies Used
+12. API Interface
 
-6\. Alternatives Considered
+13. Installation
 
-7\. ETL Pipeline
+14. Running the Pipeline
 
-8\. Retrieval System (RAG)
+15. Usage Examples
 
-9\. Structured Analytics Layer
+16. Project Structure
 
-10\. Mathematical Reasoning Tool
+17. Limitations
 
-11\. Agent Routing Logic
+18. Future Improvements
 
-12\. API Interface
+19. License
 
-13\. Installation
+# Project Overview
 
-14\. Running the Pipeline
+This project implements an **agentic intelligence system** capable of answering analytical questions from the *Cyber Ireland Cybersecurity Sector Report 2022*.
 
-15\. Usage Examples
+The system processes the report through an ETL pipeline and exposes a **query interface capable of handling different types of analytical questions**, including:
 
-16\. Project Structure
+* factual document questions
 
-17\. Limitations
+* regional comparisons
 
-18\. Future Improvements
-
-19\. License
-
-
-
----
-
-
-
-\# Project Overview
-
-
-
-This project implements an \*\*agentic intelligence system\*\* capable of answering analytical questions from the \*Cyber Ireland Cybersecurity Sector Report 2022\*.
-
-
-
-The system processes the report through an ETL pipeline and exposes a \*\*query interface capable of handling different types of analytical questions\*\*, including:
-
-
-
-\* factual document questions
-
-\* regional comparisons
-
-\* forecasting calculations
-
-
+* forecasting calculations
 
 Instead of relying solely on a language model, the system integrates:
 
+* semantic document retrieval
 
+* structured SQL queries
 
-\* semantic document retrieval
+* deterministic mathematical tools
 
-\* structured SQL queries
+This hybrid approach improves **accuracy, transparency, and reliability**.
 
-\* deterministic mathematical tools
-
-
-
-This hybrid approach improves \*\*accuracy, transparency, and reliability\*\*.
-
-
-
----
-
-
-
-\# Problem Statement
-
-
+# Problem Statement
 
 The Cyber Ireland report contains:
 
+* unstructured narrative text
 
+* structured tables
 
-\* unstructured narrative text
+* numerical projections
 
-\* structured tables
-
-\* numerical projections
-
-\* regional comparisons
-
-
+* regional comparisons
 
 Traditional document QA systems struggle with this because they require:
 
+1. document search
 
+2. structured analytics
 
-1\. document search
-
-2\. structured analytics
-
-3\. numerical reasoning
-
-
+3. numerical reasoning
 
 The goal of this assignment was to design a system that can:
 
+* extract knowledge from the report
 
+* answer analytical queries
 
-\* extract knowledge from the report
+* reference supporting evidence
 
-\* answer analytical queries
+* compute derived metrics
 
-\* reference supporting evidence
+# System Architecture
 
-\* compute derived metrics
-
-
-
----
-
-
-
-\# System Architecture
-
-
-
-```
 
 Cyber Ireland Report (PDF)
 
@@ -234,475 +173,266 @@ Retriever   SQL Tool    Math Tool
 
 &nbsp;       Client Queries
 
-```
+# Approach and Design Decisions
 
-
-
----
-
-
-
-\# Approach and Design Decisions
-
-
-
-A \*\*hybrid intelligence architecture\*\* was implemented.
-
-
+A **hybrid intelligence architecture** was implemented.
 
 Instead of relying exclusively on LLM reasoning, the system separates responsibilities:
 
-
-
-| Capability            | Implementation   |
+| Capability | Implementation |
 
 | --------------------- | ---------------- |
 
-| Document search       | Vector retrieval |
+| Document search | Vector retrieval |
 
-| Regional analytics    | SQL warehouse    |
+| Regional analytics | SQL warehouse |
 
-| Forecast calculations | Math tool        |
-
-
+| Forecast calculations | Math tool |
 
 This design improves:
 
+* correctness
 
+* reproducibility
 
-\* correctness
-
-\* reproducibility
-
-\* explainability
-
-
+* explainability
 
 Each tool is deterministic and transparent.
 
+# Technologies Used
 
-
----
-
-
-
-\# Technologies Used
-
-
-
-| Technology            | Purpose                   |
+| Technology | Purpose |
 
 | --------------------- | ------------------------- |
 
-| Python                | Core programming language |
+| Python | Core programming language |
 
-| FastAPI               | REST API framework        |
+| FastAPI | REST API framework |
 
-| LangChain             | Retrieval abstraction     |
+| LangChain | Retrieval abstraction |
 
-| Sentence Transformers | Embedding generation      |
+| Sentence Transformers | Embedding generation |
 
-| Chroma                | Vector database           |
+| Chroma | Vector database |
 
-| SQLite                | Metrics warehouse         |
+| SQLite | Metrics warehouse |
 
-| Camelot               | PDF table extraction      |
+| Camelot | PDF table extraction |
 
-| pdfminer / pypdf      | PDF text extraction       |
+| pdfminer / pypdf | PDF text extraction |
 
-| Pandas                | Data processing           |
+| Pandas | Data processing |
 
-| Uvicorn               | ASGI server               |
+| Uvicorn | ASGI server |
 
+# Why These Technologies Were Chosen
 
-
----
-
-
-
-\# Why These Technologies Were Chosen
-
-
-
-\## Python
-
-
+## Python
 
 Python was chosen due to its strong ecosystem for:
 
+* machine learning
 
+* document processing
 
-\* machine learning
+* data engineering
 
-\* document processing
+* AI frameworks
 
-\* data engineering
-
-\* AI frameworks
-
-
-
----
-
-
-
-\## FastAPI
-
-
+## FastAPI
 
 FastAPI provides:
 
+* high performance
 
+* automatic OpenAPI documentation
 
-\* high performance
-
-\* automatic OpenAPI documentation
-
-\* simple async API development
-
-
+* simple async API development
 
 Alternative considered:
 
-
-
-\*\*Flask\*\*
-
-
+**Flask**
 
 Why not Flask:
 
+* slower
 
+* lacks automatic schema documentation
 
-\* slower
+* less suited for production APIs
 
-\* lacks automatic schema documentation
-
-\* less suited for production APIs
-
-
-
----
-
-
-
-\## Sentence Transformers
-
-
+## Sentence Transformers
 
 Embedding model used:
 
 
-
-```
-
 sentence-transformers/all-MiniLM-L6-v2
-
-```
-
-
 
 Reasons:
 
+* lightweight
 
+* fast inference
 
-\* lightweight
+* strong semantic performance
 
-\* fast inference
-
-\* strong semantic performance
-
-\* works well on CPU
-
-
+* works well on CPU
 
 Alternative considered:
-
-
 
 OpenAI embeddings
 
-
-
 Rejected because:
 
+* paid API dependency
 
+* network latency
 
-\* paid API dependency
+* quota limitations
 
-\* network latency
+Local embeddings provide better **reproducibility and cost control**.
 
-\* quota limitations
-
-
-
-Local embeddings provide better \*\*reproducibility and cost control\*\*.
-
-
-
----
-
-
-
-\## Chroma Vector Database
-
-
+## Chroma Vector Database
 
 Chroma was selected because:
 
+* easy local setup
 
+* tight LangChain integration
 
-\* easy local setup
+* persistent storage
 
-\* tight LangChain integration
-
-\* persistent storage
-
-\* lightweight
-
-
+* lightweight
 
 Alternative considered:
-
-
 
 FAISS
 
-
-
 Reasons FAISS was not used:
 
+* FAISS does not natively provide persistence
 
+* requires additional management
 
-\* FAISS does not natively provide persistence
+* more suited for large-scale production systems
 
-\* requires additional management
+For this assignment, Chroma provides **simpler persistence and usability**.
 
-\* more suited for large-scale production systems
-
-
-
-For this assignment, Chroma provides \*\*simpler persistence and usability\*\*.
-
-
-
----
-
-
-
-\## SQLite
-
-
+## SQLite
 
 SQLite was used for the analytics warehouse because:
 
+* lightweight
 
+* serverless
 
-\* lightweight
+* zero configuration
 
-\* serverless
-
-\* zero configuration
-
-\* ideal for analytical prototypes
-
-
+* ideal for analytical prototypes
 
 Alternative considered:
-
-
 
 PostgreSQL
 
-
-
 PostgreSQL would be preferred in production but adds operational complexity for a local assignment.
 
-
-
----
-
-
-
-\## Camelot
-
-
+## Camelot
 
 Camelot provides reliable table extraction from PDFs.
 
-
-
 Alternative considered:
-
-
 
 Tabula
 
-
-
 Camelot was chosen because:
 
+* better Python integration
 
+* more control over extraction
 
-\* better Python integration
+* better table detection
 
-\* more control over extraction
-
-\* better table detection
-
-
-
----
-
-
-
-\# ETL Pipeline
-
-
+# ETL Pipeline
 
 The ETL pipeline prepares the report for analysis.
 
-
-
 Steps:
 
+1. Extract document text
 
+2. Extract tabular data
 
-1\. Extract document text
+3. Store metrics in database
 
-2\. Extract tabular data
+4. Create vector embeddings
 
-3\. Store metrics in database
-
-4\. Create vector embeddings
-
-
-
----
-
-
-
-\## Text Extraction
-
-
+## Text Extraction
 
 Extracts narrative sections from the report for semantic retrieval.
 
-
-
 Tools used:
 
-
-
-```
 
 pypdf
 
 pdfminer
 
-```
-
-
-
 Output:
 
+* cleaned text corpus
 
+* page metadata
 
-\* cleaned text corpus
-
-\* page metadata
-
-
-
----
-
-
-
-\## Table Extraction
-
-
+## Table Extraction
 
 Tables are extracted using Camelot and stored with metadata:
 
-
-
-| Field        | Description       |
+| Field | Description |
 
 | ------------ | ----------------- |
 
-| table\_name   | identifier        |
+| table_name | identifier |
 
-| page\_number  | source page       |
+| page_number | source page |
 
-| row\_count    | rows extracted    |
+| row_count | rows extracted |
 
-| column\_count | columns extracted |
+| column_count | columns extracted |
 
-
-
----
-
-
-
-\## Metrics Warehouse
-
-
+## Metrics Warehouse
 
 Important metrics were normalized and stored in SQLite.
 
-
-
 Example metrics:
 
-
-
-| Metric                   | Value |
+| Metric | Value |
 
 | ------------------------ | ----- |
 
-| Total firms              | 489   |
+| Total firms | 489 |
 
-| Dedicated firms          | 160   |
+| Dedicated firms | 160 |
 
-| Diversified firms        | 329   |
+| Diversified firms | 329 |
 
-| Cybersecurity employment | 7351  |
+| Cybersecurity employment | 7351 |
 
-
-
----
-
-
-
-\# Retrieval Augmented Generation (RAG)
-
-
+# Retrieval Augmented Generation (RAG)
 
 Document text is split into chunks and embedded using Sentence Transformers.
 
-
-
-These embeddings are stored in a \*\*Chroma vector store\*\*.
-
-
+These embeddings are stored in a **Chroma vector store**.
 
 When a query arrives:
 
+1. embeddings are computed
 
+2. nearest document chunks are retrieved
 
-1\. embeddings are computed
-
-2\. nearest document chunks are retrieved
-
-3\. relevant citation and page are returned
-
-
+3. relevant citation and page are returned
 
 Example output:
 
-
-
-```
 
 jobs\_reported: 7351
 
@@ -710,397 +440,163 @@ page: 23
 
 citation: workforce section of the report
 
-```
-
-
-
----
-
-
-
-\# Structured Analytics Layer
-
-
+# Structured Analytics Layer
 
 Certain queries require structured calculations rather than document retrieval.
-
-
 
 Example:
 
 
-
-```
-
 Compare the concentration of Pure-Play cybersecurity firms in the South-West against the National Average
-
-```
-
-
 
 These are answered through SQL queries against the metrics warehouse.
 
-
-
 Benefits:
 
+* deterministic
 
+* explainable
 
-\* deterministic
+* auditable
 
-\* explainable
-
-\* auditable
-
-
-
----
-
-
-
-\# Mathematical Tool
-
-
+# Mathematical Tool
 
 Growth projections require mathematical reasoning.
-
-
 
 Example query:
 
 
-
-```
-
 What CAGR is needed to reach 17000 jobs by 2030?
-
-```
-
-
 
 Formula used:
 
 
-
-```
-
 CAGR = (Final / Initial)^(1 / Years) - 1
-
-```
-
-
 
 Output:
 
 
-
-```
-
 9.76% CAGR required
-
-```
-
-
 
 Using deterministic code avoids potential numerical errors from LLM reasoning.
 
-
-
----
-
-
-
-\# Agent Routing Logic
-
-
+# Agent Routing Logic
 
 The system uses a routing layer to determine which tool should answer a query.
 
-
-
 Routing rules:
 
-
-
-| Query Pattern           | Tool      |
+| Query Pattern | Tool |
 
 | ----------------------- | --------- |
 
-| jobs / workforce        | Retriever |
+| jobs / workforce | Retriever |
 
-| compare / concentration | SQL tool  |
+| compare / concentration | SQL tool |
 
-| CAGR / growth           | Math tool |
-
-
+| CAGR / growth | Math tool |
 
 Example:
 
-
-
-```
 
 Query: What CAGR is needed to reach 17000 jobs by 2030?
 
 Tool Used: math\_tool
 
-```
-
-
-
----
-
-
-
-\# API Interface
-
-
+# API Interface
 
 The system exposes a REST API built with FastAPI.
-
-
 
 Start the API server:
 
 
-
-```
-
 uvicorn api.main:app --reload
-
-```
-
-
 
 Open interactive documentation:
 
 
-
-```
-
 http://127.0.0.1:8000/docs
 
-```
-
-
-
----
-
-
-
-\# Installation
-
-
+# Installation
 
 Clone the repository:
 
 
-
-```
-
 git clone https://github.com/mmkyadav/cyber-intelligence-system.git
-
-```
-
-
 
 Navigate to project:
 
 
-
-```
-
 cd cyber-intelligence-system
-
-```
-
-
 
 Create virtual environment:
 
 
-
-```
-
 python -m venv venv
-
-```
-
-
 
 Activate environment:
 
 
-
-```
-
 venv\\Scripts\\activate
-
-```
-
-
 
 Install dependencies:
 
 
-
-```
-
 pip install -r requirements.txt
 
-```
-
-
-
----
-
-
-
-\# Running the Pipeline
-
-
+# Running the Pipeline
 
 Run ETL steps in order.
 
+### Extract text
 
-
-\### Extract text
-
-
-
-```
 
 python etl/extract\_text.py
 
-```
+### Build vector store
 
-
-
-\### Build vector store
-
-
-
-```
 
 python etl/build\_vector\_store.py
 
-```
+### Extract tables
 
-
-
-\### Extract tables
-
-
-
-```
 
 python etl/extract\_tables.py
 
-```
+### Build metrics warehouse
 
-
-
-\### Build metrics warehouse
-
-
-
-```
 
 python etl/build\_metrics\_layer.py
 
-```
+# Run the API
 
-
-
----
-
-
-
-\# Run the API
-
-
-
-```
 
 uvicorn api.main:app --reload
 
-```
+# Example Queries
 
+### Employment
 
-
----
-
-
-
-\# Example Queries
-
-
-
-\### Employment
-
-
-
-```
 
 What is the total number of jobs reported?
-
-```
-
-
 
 Output
 
 
-
-```
-
 7351 jobs
 
-```
+### Regional comparison
 
-
-
----
-
-
-
-\### Regional comparison
-
-
-
-```
 
 Compare the concentration of Pure-Play cybersecurity firms in the South-West against the National Average
 
-```
+### Growth projection
 
-
-
----
-
-
-
-\### Growth projection
-
-
-
-```
 
 What CAGR is needed to reach 17000 jobs by 2030?
 
-```
+# Project Structure
 
-
-
----
-
-
-
-\# Project Structure
-
-
-
-```
 
 cyber-intelligence-system
 
@@ -1156,63 +652,30 @@ cyber-intelligence-system
 
 └── .gitignore
 
-```
+# Limitations
 
+* Only a single report is indexed
 
+* Some regional breakdowns were unavailable in the source document
 
----
+* Query routing is rule-based rather than model-driven
 
-
-
-\# Limitations
-
-
-
-\* Only a single report is indexed
-
-\* Some regional breakdowns were unavailable in the source document
-
-\* Query routing is rule-based rather than model-driven
-
-
-
----
-
-
-
-\# Future Improvements
-
-
+# Future Improvements
 
 Possible extensions:
 
+* LLM-based query planner
 
+* multi-document indexing
 
-\* LLM-based query planner
+* automated SQL generation
 
-\* multi-document indexing
+* dashboard visualization
 
-\* automated SQL generation
+* deployment with Docker
 
-\* dashboard visualization
+# License
 
-\* deployment with Docker
-
-
-
----
-
-
-
-\# License
-
-
-
-This repository is provided solely for \*\*technical evaluation purposes\*\* as part of a coding assessment.
-
-
+This repository is provided solely for **technical evaluation purposes** as part of a coding assessment.
 
 Commercial use or redistribution without permission is not permitted.
-
-
-
